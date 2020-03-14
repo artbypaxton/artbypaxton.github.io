@@ -1,0 +1,159 @@
+// Default color variables. Overwrite these in _vars.scss
+// from http://clrs.cc
+$colors: (
+  'aqua'    : #7fdbff,
+  'blue'    : #0074d9,
+  'navy'    : #001f3f,
+  'teal'    : #39cccc,
+  'green'   : #2ecc40,
+  'olive'   : #3d9970,
+  'lime'    : #01ff70,
+  'yellow'  : #ffdc00,
+  'orange'  : #ff851b,
+  'red'     : #ff4136,
+  'fuchsia' : #f012be,
+  'purple'  : #b10dc9,
+  'maroon'  : #85144b,
+  'white'   : #fff,
+  'silver'  : #ddd,
+  'gray'    : (
+                'base'  : #aaa,
+                'light' : #ccc,
+                'dark'  : #888
+              ),
+  'black'   : #111,
+)!default;
+
+//
+//   @colors
+// --------------------------------------------------------
+//  _1_base/_mixins/_colors.scss
+// --------------------------------------------------------
+//
+//  Shortcut function to grab the map $colors.
+//
+// --------------------------------------------------------
+
+@function color($color, $tone: 'base', $color-map: $colors) {
+    @if type-of(map-get($color-map, $color)) == 'map' {
+        @return map-get(map-get($color-map, $color), $tone);
+    } @else {
+        @return map-get($color-map, $color);
+    }
+}
+
+
+
+
+//
+//   @shades
+// --------------------------------------------------------
+//
+//  Functions to make shade variables from a base color.
+//
+//  Tint and Shade from https://css-tricks.com/snippets/sass/tint-shade-functions/
+//
+// --------------------------------------------------------
+
+// Slightly lighten a color
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+// Slightly darken a color
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+@function darkest($color) {
+    @return shade($color, 40%);
+}
+
+@function darker($color) {
+    @return shade($color, 25%);
+}
+
+@function dark($color) {
+    @return shade($color, 10%);
+}
+
+@function light($color) {
+    @return tint($color, 10%);
+}
+
+@function lighter($color) {
+    @return tint($color, 25%);
+}
+
+@function lightest($color) {
+    @return tint($color, 40%);
+}
+
+
+
+
+//
+//   @colors
+// ---------------------------------------------------------
+//
+//  Mixins to change out backgrounds and colors.
+//
+// ---------------------------------------------------------
+
+@mixin bg-color($color, $tone: 'base') {
+    @if type-of(map-get($colors, $color)) == 'map' {
+        background-color: map-get(map-get($colors, $color), $tone);
+    } @else {
+        background-color: map-get($colors, $color);
+    }
+}
+
+@mixin color($color, $tone: 'base') {
+    @if type-of(map-get($colors, $color)) == 'map' {
+        color: map-get(map-get($colors, $color), $tone);
+    } @else {
+        color: map-get($colors, $color);
+    }
+}
+
+
+
+
+//
+//   @gradients
+// ---------------------------------------------------------
+//
+//  Modified from http://codepen.io/Hornebom/pen/epqmGx/
+//
+// ---------------------------------------------------------
+//
+//  Built upon the logic found in a ps file
+//  element has a solid background
+//  background is covered by a gradient of one color
+//  one can define the opacity of the two color stops + the gradient angle
+//
+//  $bgColor,       // background-color
+//  $angle,         // gradient angle
+//  $gradientColor, // gradient color
+//  $opacityStart,  // opacity at start > 1 - 0
+//  $opacityEnd     // opacity at end > 1 - 0
+//
+//  examples
+//
+//  @include gradient($purple-base, $mint-base);
+//
+//  @include gradient($purple-base, $mint-base, 0.8, 0.6, 180);
+//
+// ---------------------------------------------------------
+
+@mixin gradient($bg-color, $gradient-color, $opacity-start: 1, $opacity-end: 0, $angle: 0) {
+    background-color: $bg-color;
+    background-image: linear-gradient(
+        ($angle * 1deg),
+        rgba($gradient-color, $opacity-start),
+        rgba($gradient-color, $opacity-end)
+    );
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}

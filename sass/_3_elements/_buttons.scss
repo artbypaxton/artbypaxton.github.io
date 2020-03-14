@@ -1,0 +1,113 @@
+//
+//   @buttons
+// ----------------------------------------------------------
+//  _3_elements/_buttons.scss
+// ----------------------------------------------------------
+//
+//  Buttons are a common UI component in sites/apps.  They
+//  are usually either anchor, button, or input elements
+//  with a classname of 'btn'.  They provide an easily
+//  identified clickable target.
+//
+//  Buttons commonly have modifying classes that apply
+//  specific styles.
+//
+// ----------------------------------------------------------
+
+
+
+
+//
+//   @btn
+// --------------------------------------------------------
+//  Your primary, go-to button
+//
+//  Example: Anchor Button
+//  <a href="#" role="button" title="sample">Anchor Button</a>
+//
+//  Example: Regular Button
+//  <button>Button Button</button>
+//
+//  Example: Input
+//  <input type="submit" role="button" value="Input Button">
+//
+//  Example: Active state, with .is-active
+//  <a href="#" role="button" class="is-active">Active Button</a>
+//
+// --------------------------------------------------------
+
+button, [role=button] {
+    border: 0;
+    display: inline-block;
+    vertical-align: middle;
+
+    &.is-active {
+        opacity: .75;
+    }
+
+    &:hover,
+    &:focus {
+        opacity: .85;
+    }
+
+
+
+
+
+    // --------------------------------------------------------
+    //
+    //  A btn modifier, large
+    //
+    //  Example: .btn--large
+    //  <a class="btn btn--large">Large button</a>
+    //
+    // --------------------------------------------------------
+
+    // &.m--large {
+    //
+    // }
+
+
+
+
+    // --------------------------------------------------------
+    //
+    //  A button modifier, if this button is in a paragraph or
+    //  in anything else that has a defined font-size, this
+    //  modifier will make the btn inherit the font-size of
+    //  the partent.
+    //
+    //  Example: .m--inline
+    //  <p>Here's some text <a role="button" class="m--inline">Cool button</a> text keeps going</p>
+    //
+    // --------------------------------------------------------
+
+    .m--inline {
+        font-size: 1em;
+    }
+
+
+
+
+    // --------------------------------------------------------
+    //
+    //  A btn modifier - makes the button display block, 100%
+    //  width and aligns the text to the center.  Removes left
+    //  and right padding since the text is center aligned, it
+    //  is not needed.  Actually sometimes having the padding
+    //  on the left and right causes problems if the centered
+    //  text is quite long - so we just remove it.
+    //
+    //  Example: .m--block
+    //  <a href="#" role="button" class="m--block">Block button</a>
+    //
+    // --------------------------------------------------------
+
+    .m--block {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+        text-align: center;
+        width: 100%;
+    }
+}

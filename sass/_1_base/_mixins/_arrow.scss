@@ -1,0 +1,296 @@
+//
+//   @arrow
+// --------------------------------------------------------
+//  _1_base/_mixins/_arrow.scss
+// --------------------------------------------------------
+//
+//  A mixin to create an arrow relative to a parent.  Note
+//  that your parent element will need to have relative,
+//  absolute, or fixed position declared.
+//
+//  Influenced by http://www.sassmeister.com/gist/099c793ee0905981b0a0
+//
+//  The arguments are:
+//
+//    Edge: top / right / bottom / left
+//    Background Color
+//    Size
+//    Location
+//    Offset
+//    Border Color
+//    Border Size
+//
+//  Pass in mandatory edge and color information.
+//  Optionally specify a size (small, medium, large, <value>), location
+//  (middle, left, right, top, bottom), and an offset (<value>) which
+//  moves the arrow in from an edge by <value>.
+//
+//  .simple-usage {
+//    @include arrow(top, #f00);
+//  }
+//
+//  .complex-usage {
+//    // Create a 50px yellow arrow that sits 5% in from the top right of a box.
+//    @include arrow(top, yellow, 50px, right, 5%);
+//  }
+//
+//  .with-a-border {
+//    // Create a 50px yellow arrow, with a black border
+//    // that sits 5% in from the top right of a box.
+//    @include arrow(top, yellow, 50px, right, 5%, black, 2px);
+//  }
+//
+// --------------------------------------------------------
+
+@mixin arrow($edge, $bg-color, $size: 20px, $location: 'middle', $offset: 0, $border-color: false, $border-size: false) {
+
+    // If an offset has been defined, let’s use it.
+    @if ($offset != 0) {
+        $offset: $offset;
+    }
+
+    // Map keyword sizes to actual numbers. Use passed-in value if defined.
+    @if ($size == 'small') {
+        $size: 10px;
+    } @elseif ($size == 'medium') {
+        $size: 15px;
+    } @elseif ($size == 'large') {
+        $size: 20px;
+    } @else {
+        $size: $size;
+    }
+
+    // if border-size is true but no value is passed, let's assign a default
+    @if $border-size == true  {
+        $border-size: 2px;
+    }
+
+    // Host element styles.
+    position: relative; // Host element needs relative positioning.
+
+
+    @if $border-size != false  {
+
+
+        &:before,
+        &:after {
+            @include triangle($size, $bg-color, $edge);
+            content: '';
+            pointer-events: none;
+            position: absolute;
+            z-index: 1; // Ensure it sits above the host element.
+            margin: 0; // Defensively reset a bunch of things so we can have different arrows across multiple breakpoints
+            top: auto; // see above
+            right: auto; // see above
+            bottom: auto; // see above
+            left: auto; // see above
+
+            // If position is top
+            @if $edge == 'top' {
+                bottom: 100%;
+
+                @if ($location == 'left') {
+                    left: $offset;
+                }
+                @if ($location == 'middle') {
+                    left: 50%;
+                    margin-left: -$size;
+                }
+                @if ($location == 'right') {
+                    right: $offset;
+                }
+            }
+
+            // if position is right
+            @if $edge == 'right' {
+                left: 100%;
+
+                @if ($location == 'top') {
+                    top: $offset;
+                }
+                @if ($location == 'middle') {
+                    top: 50%;
+                    margin-top: -$size;
+                }
+                @if ($location == 'bottom') {
+                    bottom: $offset;
+                }
+            }
+
+            // If position is bottom
+            @if $edge == 'bottom' {
+                top: 100%;
+
+                @if ($location == 'left') {
+                    left: $offset;
+                }
+                @if ($location == 'middle') {
+                    left: 50%;
+                    margin-left: -$size;
+                }
+                @if ($location == 'right') {
+                    right: $offset;
+                }
+            }
+
+            // If position is left
+            @if $edge == 'left' {
+                right: 100%;
+
+                @if ($location == 'top') {
+                    top: $offset;
+                }
+                @if ($location == 'middle') {
+                    top: 50%;
+                    margin-top: -$size;
+                }
+                @if ($location == 'bottom') {
+                    bottom: $offset;
+                }
+            }
+
+        }
+
+        $border-triangle-size: $size + ($border-size * 1.5);
+
+        &:before {
+            @include triangle($border-triangle-size, $border-color, $edge);
+
+            // If position is top
+            @if $edge == 'top' {
+                @if ($location == 'left') {
+                    margin-left: $offset - $border-size;
+                }
+                @if ($location == 'middle') {
+                    margin-left: -$border-triangle-size;
+                }
+                @if ($location == 'right') {
+                    margin-right: $offset - $border-size;
+                }
+            }
+
+            // if position is right
+            @if $edge == 'right' {
+                @if ($location == 'top') {
+                    margin-top: $offset - $border-size;
+                }
+                @if ($location == 'middle') {
+                    margin-top: -$border-triangle-size;
+                }
+                @if ($location == 'bottom') {
+                    margin-bottom: $offset - $border-size;
+                }
+            }
+
+            // If position is bottom
+            @if $edge == 'bottom' {
+                @if ($location == 'left') {
+                    margin-left: $offset - $border-size;
+                }
+                @if ($location == 'middle') {
+                    margin-left: -$border-triangle-size;
+                }
+                @if ($location == 'right') {
+                    margin-right: $offset - $border-size;
+                }
+            }
+
+            // If position is left
+            @if $edge == 'left' {
+                @if ($location == 'top') {
+                    margin-top: $offset - $border-size;
+                }
+                @if ($location == 'middle') {
+                    margin-top: -$border-triangle-size;
+                }
+                @if ($location == 'bottom') {
+                    margin-bottom: $offset - $border-size;
+                }
+            }
+        }
+
+
+    } @else {
+
+
+        &:after {
+            @include triangle($size, $bg-color, $edge);
+            content: ' ';
+            pointer-events: none;
+            position: absolute;
+            z-index: 1; // Ensure it sits above the host element.
+            margin: 0; // Defensively reset a bunch of things so we can have different arrows across multiple breakpoints
+            top: auto; // see above
+            right: auto; // see above
+            bottom: auto; // see above
+            left: auto; // see above
+
+            // If position is top
+            @if $edge == 'top' {
+                bottom: 100%;
+
+                @if ($location == 'left') {
+                    left: $offset;
+                }
+                @if ($location == 'middle') {
+                    left: 50%;
+                    margin-left: -$size;
+                }
+                @if ($location == 'right') {
+                    right: $offset;
+                }
+            }
+
+            // if position is right
+            @if $edge == 'right' {
+                left: 100%;
+
+                @if ($location == 'top') {
+                    top: $offset;
+                }
+                @if ($location == 'middle') {
+                    top: 50%;
+                    margin-top: -$size;
+                }
+                @if ($location == 'bottom') {
+                    bottom: $offset;
+                }
+            }
+
+            // If position is bottom
+            @if $edge == 'bottom' {
+                top: 100%;
+
+                @if ($location == 'left') {
+                    left: $offset;
+                }
+                @if ($location == 'middle') {
+                    left: 50%;
+                    margin-left: -$size;
+                }
+                @if ($location == 'right') {
+                    right: $offset;
+                }
+            }
+
+            // If position is left
+            @if $edge == 'left' {
+                right: 100%;
+
+                @if ($location == 'top') {
+                    top: $offset;
+                }
+                @if ($location == 'middle') {
+                    top: 50%;
+                    margin-top: -$size;
+                }
+                @if ($location == 'bottom') {
+                    bottom: $offset;
+                }
+            }
+        }
+
+
+    }
+
+}

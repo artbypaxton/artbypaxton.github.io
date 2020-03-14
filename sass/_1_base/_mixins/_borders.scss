@@ -1,0 +1,11 @@
+//
+//   @borders
+// --------------------------------------------------------
+//  _1_base/_mixins/_borders.scss
+// --------------------------------------------------------
+//
+//  Mixin to set default border styles.
+//
+// --------------------------------------------------------
+
+@mixin border { border: $border-width $border-style $border-color; }

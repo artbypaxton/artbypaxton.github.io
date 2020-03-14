@@ -1,0 +1,86 @@
+//
+//   @hide
+// ---------------------------------------------------------
+//
+//  Utility state classes to hide things in different ways
+//
+// ---------------------------------------------------------
+
+
+// --------------------------------------------------------
+//
+//  The classic, display: none
+//
+//  Also includes breakpoint specific hidden classes.
+//
+//  These breakpoints are defined in _1_base/_vars.scss,
+//  and use max-width by default.
+//
+//  The breakpoint specific variants are removed for old IE
+//  - use the default mixin, to hide elements there.
+//
+//  Example:
+//
+//  .feature {
+//      @include is-hidden;
+//  }
+//
+//  .feature {
+//      @include is-hidden('s', 'min');
+//  }
+//
+// --------------------------------------------------------
+
+@mixin is-hidden($breakpoint: false, $comparison: 'max', $dimension: 'width', $size: 'base') {
+    @if $breakpoint {
+        @include media(query($breakpoint, $comparison, $dimension, $size)) {
+            @include is-hidden;
+        }
+    } @else {
+        display: none;
+    }
+}
+
+
+
+
+
+// --------------------------------------------------------
+//
+//  Use this if you still need JS access to this element
+//  it's visually hidden but still in the DOM
+//
+//  Breakpoint specific visually hidden classes.
+//
+//  These breakpoints are defined in _1_base/_vars.scss,
+//  and use max-width by default.
+//
+//  The breakpoint specific variants are removed for old IE
+//  - use the default mixin, to hide elements there.
+//
+//  Example:
+//
+//  .feature {
+//      @include is-visually-hidden;
+//  }
+//
+//  .feature {
+//      @include is-visually-hidden('s', 'min');
+//  }
+//
+// --------------------------------------------------------
+
+@mixin is-visually-hidden($breakpoint: false, $comparison: 'max', $dimension: 'width', $size: 'base') {
+    @if $breakpoint {
+        @include media(query($breakpoint, $comparison, $dimension, $size)) {
+            @include is-visually-hidden;
+        }
+    } @else {
+        height: 0;
+        left: -9999%;
+        margin: 0;
+        opacity: 0;
+        padding: 0;
+        position: absolute;
+    }
+}

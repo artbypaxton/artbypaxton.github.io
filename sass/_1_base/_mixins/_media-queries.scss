@@ -1,0 +1,93 @@
+//
+//   @media_queries
+// --------------------------------------------------------
+//  _1_base/_mixins/_media_queries.scss
+// --------------------------------------------------------
+//
+//  Shortcut function to grab the map $breakpoints.
+//
+// --------------------------------------------------------
+
+@function breakpoint($breakpoint, $size: 'base', $bp-map: $breakpoints) {
+    @if type-of(map-get($bp-map, $breakpoint)) == 'map' {
+        @return map-get(map-get($bp-map, $breakpoint), $size);
+    } @else {
+        @return map-get($bp-map, $breakpoint);
+    }
+}
+
+
+
+
+// --------------------------------------------------------
+//
+//  The query function can be used to quickly create the
+//  query portion of a media query.
+//
+//  Example:
+//
+//  @include media(query('s')) {
+//      styles here...
+//  }
+//
+//  or
+//
+//  @media #{query('s')} {
+//      styles here...
+//  }
+//
+//  Complex Example:
+//
+//  @include media('screen and #{query('s')} and #{query('900px', $dimension: 'height')}') {
+//      styles here...
+//  }
+//
+// --------------------------------------------------------
+
+@function query($breakpoint, $comparison: 'min', $dimension: 'width', $size: 'base', $bp-map: $breakpoints) {
+    @if map-has-key($bp-map, $breakpoint) {
+        $breakpoint: breakpoint($breakpoint, $size, $bp-map);
+
+        // if going max, let's reduce the variable by 1 pixel so we don't have an overlap or gap in our media queries
+        @if $comparison == 'max' {
+            $breakpoint: $breakpoint - em(1, 16);
+        }
+    }
+    @return '(#{$comparison}-#{$dimension}: #{$breakpoint})';
+}
+
+
+
+
+//
+//   @hidpi
+// --------------------------------------------------------
+//
+//  HiDPI mixin. Default value set to 1.3 to target Google
+//  Nexus 7 (http://bjango.com/articles/min-device-pixel-ratio/)
+//
+//  See http://signalvnoise.com/posts/3271-easy-retina-ready-images-using-scss
+//  for information on using this with background images.
+//
+//  Example:
+//
+//  .feature {
+//      @inclue hidpi {
+//          background-image: url($image);
+//          background-size: $width $height;
+//      }
+//  }
+//
+//  Use images that are scaled by 2.
+//
+// --------------------------------------------------------
+
+@mixin hidpi($ratio: 1.3) {
+    @media only screen and (-webkit-min-device-pixel-ratio: $ratio),
+    only screen and (min--moz-device-pixel-ratio: $ratio),
+    only screen and (-o-min-device-pixel-ratio: #{$ratio}/1),
+    only screen and (min-resolution: #{round($ratio*96)}dpi),
+    only screen and (min-resolution: #{$ratio}dppx) {
+        @content;
+    }
+}

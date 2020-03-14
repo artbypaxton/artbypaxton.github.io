@@ -1,0 +1,23 @@
+{
+  "name": "air-drop",
+  "version": "0.1.0",
+  "description": "A starter framework for Jekyll.",
+  "author": "Jacob Fentress",
+  "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guerillalabs/air-drop.git"
+  },
+  "devDependencies": {
+    "cssnano": "^3.10.0",
+    "grunt": "^1.0.1",
+    "grunt-autoprefixer": "^3.0.4",
+    "grunt-concurrent": "^2.3.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jekyll": "^0.4.4",
+    "grunt-postcss": "^0.8.0",
+    "grunt-sass": "^1.2.1"
+  }
+}

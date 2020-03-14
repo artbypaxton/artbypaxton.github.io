@@ -1,0 +1,72 @@
+//
+//   @centering
+// ---------------------------------------------------------
+//
+//  Center objects with unkown widths vertically
+//  and/or horizontally
+//
+// ---------------------------------------------------------
+
+@mixin horizontal-center($margin: true) {
+    @if $margin == true {
+        margin-left: auto;
+        margin-right: auto;
+    } @else {
+        left: 50%;
+        position: relative;
+        transform: translateX(-50%);
+    }
+}
+
+@mixin vertical-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+// Repetitive to avoid transforms overriding one another.
+@mixin center($margin: true) {
+    @if $margin == true {
+        margin-left: auto;
+        margin-right: auto;
+        transform: translateY(-50%);
+    } @else {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    position: relative;
+    top: 50%;
+}
+
+
+
+
+//
+//   @center-inside
+// ---------------------------------------------------------
+//
+//  Center elements within the current element.
+//
+// ---------------------------------------------------------
+
+@mixin center-inside {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@mixin horizontal-center-inside($align: true) {
+    @if $align == true {
+        text-align: center;
+    } @else {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@mixin vertical-center-inside {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

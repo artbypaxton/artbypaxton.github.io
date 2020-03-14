@@ -1,0 +1,33 @@
+//
+//   @clearfix
+// ---------------------------------------------------------
+//  _1_base/_mixins/_clearfix.scss
+// ---------------------------------------------------------
+//
+//  Use @include clearfix in your CSS
+//
+//  This version of the clearfix from:
+//  http://www.css-101.org/articles/clearfix/latest-new-clearfix-so-far.php
+//
+//  Acknowledgements:
+//  Micro clearfix: [Nicolas Gallagher](http://nicolasgallagher.com/micro-clearfix-hack/)
+//
+//  Example:
+//
+//  .wrapper {
+//    @include clearfix;
+//    .content,
+//    .sidebar {
+//      float : left;
+//    }
+//  }
+//
+// ---------------------------------------------------------
+
+@mixin clearfix {
+    &:after {
+        clear: both;
+        content: '';
+        display: table;
+    }
+}

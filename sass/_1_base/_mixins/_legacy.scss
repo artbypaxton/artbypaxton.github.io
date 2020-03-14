@@ -1,0 +1,169 @@
+//
+//   @legacy
+// --------------------------------------------------------
+//  _1_base/_mixins/_legacy.scss
+// --------------------------------------------------------
+//
+//  Use this mixin to write styles that are only intended
+//  for use on legacy browsers.
+//
+//  By default, this mixin does not put the contained styles
+//  in the stylesheet.
+//
+//  For "Old IE" style sheets that should get the styles, use:
+//
+//  $legacy: true;
+//
+//  Example lte-ie8.scss
+//
+//  $rems: false;
+//  $no-queries: true;
+//  $legacy: true;
+//
+//  @import 'screen';
+//
+// --------------------------------------------------------
+
+$legacy: false !default;
+
+
+
+
+@mixin legacy($for-legacy: true) {
+
+    @if $legacy == false and $for-legacy == false  {
+        @content;
+    }
+
+    @if $legacy == true and $for-legacy == true {
+        @content;
+    }
+}
+
+
+
+
+//
+//   @legacy-select
+// --------------------------------------------------------
+//
+//  The legacy-select mixin allows you to chose css selectors
+//  that should be written for modern browsers vs. selectors
+//  that should be for legacy browsers.
+//
+//  The purpose is because some older browsers will kill an
+//  entire style block if it doesn't understand one of the
+//  selectors.
+//
+//  This way, styles to not have to be repeated in your code
+//  (making maintenance much easier).
+//
+//  Example:
+//
+//  @include legacy-select('.example:nth-child(3n)', '.example.large') {
+//      font-size: 1.25em;
+//  }
+//
+// --------------------------------------------------------
+
+@mixin legacy-select($for-modern, $for-legacy, $combined: true) {
+
+    @if $legacy == false  {
+        @if $combined == true {
+            #{$for-legacy}, #{$for-modern} {
+                @content;
+            }
+        } @else {
+            #{$for-modern} {
+                @content;
+            }
+        }
+    }
+
+    @if $legacy == true {
+        #{$for-legacy} {
+            @content;
+        }
+    }
+}
+
+
+
+
+//
+//   @media-queries
+// --------------------------------------------------------
+//  _1_base/_mixins/_media-queries.scss
+// --------------------------------------------------------
+//
+//  Use this mixin to have media-queries that will degrade
+//  gracefully for older versions of IE that do not support
+//  media queries.
+//
+//  inspired by http://alwaystwisted.com/post.php?s=2013-04-01-my-media-query-mixin
+//
+//  By default, this mixin outputs media queries just as
+//  Sass would. Set the $no-queries variable at the top of
+//  your style sheet to override this.
+//
+//  For "Old IE" style sheets that shouldn't get the media
+//  queries (only the fall-back styles), use:
+//
+//  $no-queries: true;
+//
+//  Several arguments can be passed to alter the way the
+//  mixin behaves.
+//
+//  Base Example:
+//
+//  .test {
+//      background: #fff;
+//      @include media('screen and (min-width: 400px) and (max-width: 600px)') {
+//          color: #000;
+//      }
+//  }
+//
+//  The entire query part of the media query is passed as
+//  an argument. You can use variables for your dimensions
+//  by using interpolation – like #{$bp-small}
+//
+//  You can specify when styles in media queries shouldn't
+//  be sent to "fallback" browsers.
+//
+//  .test {
+//      background: #fff;
+//      @include media('screen and (min-width: 400px) and (max-width: 600px)', $no-query-fallback: false) {
+//          color: #000;
+//      }
+//  }
+//
+//  Note the "no-query-fallback" argument.
+//
+//
+//  Example lte-ie8.scss
+//
+//  $rems: false;
+//  $no-queries: true;
+//  $legacy: true;
+//
+//  @import 'screen';
+//
+// --------------------------------------------------------
+
+$no-queries: false !default;
+
+
+
+
+@mixin media($query, $no-query-fallback: true) {
+
+    @if $no-queries == false  {
+        @media #{$query} {
+            @content;
+        }
+    }
+
+    @if $no-query-fallback == true and $no-queries == true {
+        @content;
+    }
+}

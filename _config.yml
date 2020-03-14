@@ -1,0 +1,34 @@
+name:        Paxton Tatum
+
+safe:        false
+host:        0.0.0.0
+port:        4000
+baseurl:     /
+url:         http://localhost:4000
+lsi:         false
+markdown:    kramdown
+
+source:      .
+destination: ./_site
+plugins_dir: ./_plugins
+layouts_dir: ./_layouts
+
+include:
+    - '.htaccess'
+exclude:
+    - node_modules
+    - Gruntfile.js
+    - package.json
+    - bower.json
+    - README.md
+    - TODO.md
+
+future:      true
+show_drafts: null
+limit_posts: 0
+highlighter: null
+
+relative_permalinks: false
+
+permalink:   /:title/
+paginate_path: 'page:num'

@@ -1,0 +1,293 @@
+//
+//   @variables
+// ---------------------------------------------------------
+//  _1_foundation/_vars.scss
+// ---------------------------------------------------------
+//
+//  Global variables are defined here
+//
+// ---------------------------------------------------------
+
+
+
+
+// --------------------------------------------------------
+//
+//  URLs
+//
+//  set the base url of the site (helpful for switching
+//  between server environments)
+//
+// --------------------------------------------------------
+
+$baseurl: '../' !default; // typically '/' or '../'
+
+
+
+
+// --------------------------------------------------------
+//
+//  Dimensions
+//
+// --------------------------------------------------------
+
+$base-font-size         : 18;
+$base-line-height       : 27 / $base-font-size;
+
+$vertical-rhythm        : $base-font-size / 2;  // should equal a whole number
+$vertical-unit          : rem($vertical-rhythm);
+
+$spacing: (
+    'xxl'               : modular-scale(rem($vertical-rhythm), 4, 1.618),  // 62
+    'xl'                : modular-scale(rem($vertical-rhythm), 3, 1.618),  // 38
+    'l'                 : modular-scale(rem($vertical-rhythm), 2, 1.618),  // 24
+    'm'                 : modular-scale(rem($vertical-rhythm), 1, 1.618),  // 15
+    's'                 : modular-scale(rem($vertical-rhythm), 0, 1.618),  // 9
+    'xs'                : modular-scale(rem($vertical-rhythm), -1, 1.618), // 6
+    'xxs'               : modular-scale(rem($vertical-rhythm), -2, 1.618), // 3
+);
+
+// breakpoints - should always be based off of a 16px base
+$breakpoints: (
+    'xl'                : em(1280, 16),
+    'l'                 : em(960, 16),
+    'm'                 : em(769, 16),
+    's'                 : em(481, 16)
+);
+
+$maxwidth               : em(1440);
+
+
+
+
+// --------------------------------------------------------
+//
+//  Typography
+//
+//  Use @include font-size('xxl'); in your css.
+//
+// --------------------------------------------------------
+//
+//  There are two types of font-sizing in Sasspool —
+//  responsive and static.
+//
+//  Static sizing sets a specific font-size at a specific
+//  breakpoint, while responsive scales the font-size
+//  smoothly between a minimum and maximum size.
+//
+//  The type of sizing used in your project is determined
+//  by the `$responsive-typography` variable below.
+//
+// --------------------------------------------------------
+//
+//  Static example values:
+//
+//  $font-sizes: (
+//      'l'                 : (
+//                              null : (18px, 2),
+//                              's'  : (20px, 1.75)
+//                            ),
+//      's'                 : (16px, 2),
+//
+//      'example'           : (
+//                              null : (15px, 1.3),
+//                              's'  : 16px,
+//                              'm'  : (17px, 1.4),
+//                              '900px' : 18px,
+//                              'l'  : (19px, 1.45),
+//                              '1440px' : 20px
+//                            ),
+//      'example2'          : 15px
+//  );
+//
+//  See http://www.smashingmagazine.com/2015/06/responsive-typography-with-sass-maps/
+//  for more information.
+//
+//  If two values are provided, the first is the font-size
+//  and the second is the line height.
+//
+// --------------------------------------------------------
+//
+//  Responsive example values:
+//
+//  $font-sizes: (
+//      'l'                 : (
+//                              'min-font-size' : (15px, 1.5),
+//                              'max-font-size' : 20px,
+//                              'lower-font-range' : 's',
+//                              'upper-font-range' : 1440px
+//                            ),
+//      's'                 : (16px, 2),
+//      'example'           : 15px
+//  );
+//
+//  See https://github.com/seaneking/postcss-responsive-type
+//  for more information.
+//
+//  If two values are provided for a font-size (not lower or
+//  upper font range), the first is the font-size and the
+//  second is the line height.
+//
+// --------------------------------------------------------
+
+$responsive-typography: true;
+
+$font-sizes: (
+    'xxl'               : (
+                            'min-font-size' : (rem(40), 1),
+                            'max-font-size' : rem(50),
+                            'lower-font-range' : 's',
+                            'upper-font-range' : 'l'
+                          ),
+    'xl'                : (
+                            'min-font-size' : (rem(27), 1.2),
+                            'max-font-size' : rem(36),
+                            'lower-font-range' : 's',
+                            'upper-font-range' : 'l'
+                          ),
+    'l'                 : (
+                            'min-font-size' : (rem(20), 1.3),
+                            'max-font-size' : rem(27),
+                            'lower-font-range' : 's',
+                            'upper-font-range' : 'l'
+                          ),
+    'm'                 : (
+                            'min-font-size' : (rem(16), 1.4),
+                            'max-font-size' : rem(20),
+                            'lower-font-range' : 's',
+                            'upper-font-range' : 'l'
+                          ),
+    's'                 : (
+                            'min-font-size' : (rem(13), 1.5),
+                            'max-font-size' : rem(16),
+                            'lower-font-range' : 's',
+                            'upper-font-range' : 'l'
+                          ),
+    'xs'                : (rem(11), 1.5)
+);
+
+
+
+
+// --------------------------------------------------------
+//
+//  Grid Settings
+//
+//  These variables are explained in greater detail in
+//  _2_layout/_grids.scss
+//
+// --------------------------------------------------------
+
+$gutter:                spacing('l');
+
+$use-silent-classes:    false;
+$push:                  false;
+$pull:                  false;
+
+$grid-breakpoints: (
+    'medium' query('s'),
+    'large' query('l'),
+    'wide' query('xl')
+);
+
+$breakpoint-has-widths: ('medium', 'large', 'wide');
+$breakpoint-has-push:   ('medium', 'large', 'wide');
+$breakpoint-has-pull:   ('medium', 'large', 'wide');
+
+
+
+
+// --------------------------------------------------------
+//
+//  Colors
+//
+//  We use real color names here.  Although naming something
+//  like 'brand' is in fact more generic and reusable, we've
+//  found that you end up creating variables like $brand-2,
+//  $brand-alt, $brand-complimentary etc.  While coding,
+//  it's too easy to forget what those mean.
+//
+//  If the design changes drastically and the brand changes
+//  from, let's say, blue to green, just do a global
+//  find/replace - that's what text editors are for.
+//
+//  Base colors from http://clrs.cc
+//
+// --------------------------------------------------------
+
+// return these colors with a map-get in Sass. Ex. map-get($colors, 'aqua')
+// there is also a function to return these colors quickly. Ex. color('aqua')
+$colors: (
+    'blue'              : #3f88c5,
+    'light-blue'        : #00bcd4,
+
+    // Grey Scale
+    'white'             : #fff,
+    'silver'            : #ddd,
+    'gray'              : #555,
+    'black'             : #333,
+);
+
+
+
+
+
+// Assign colors to roles
+$body-color             : color('white');
+$text-color             : color('black');
+
+// Now define another set of colors. These will be used to style alerts, inputs and buttons
+$placeholder-txt        : #b2b2b2;
+
+$error-bg               : #ffe6e6;
+$error-txt              : #e04646;
+$error-border           : #e04646;
+
+$warning-bg             : #fcf7d8;
+$warning-txt            : #b29804;
+$warning-border         : #b29804;
+
+$info-bg                : #e8f3ff;
+$info-txt               : #537df6;
+$info-border            : #537df6;
+
+$success-bg             : #dafce1;
+$success-txt            : #0ca129;
+$success-border         : #0ca129;
+
+
+
+
+// --------------------------------------------------------
+//
+//  Texture
+//
+// --------------------------------------------------------
+
+$border-color           : color('gray');
+$border-style           : solid;
+$border-width           : 1px;
+$border-radius          : 3px;
+
+
+
+
+// --------------------------------------------------------
+//
+//  Z-Index
+//
+// --------------------------------------------------------
+
+// return these z-index values with a map-get in Sass. Ex. map-get($zindex, 'modal')
+// there is also a function to return these values quickly. Ex. zindex('modal')
+$zindex: (
+    'modal'             : 900,
+    'overlay'           : 800,
+    'dropdown'          : 700,
+    'header'            : (
+                           'base'  : 600,
+                           'mid'   : 650,
+                           'high'  : 690
+                          ),
+    'footer'            : 500
+);
